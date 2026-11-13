@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply AI Skills Toolkit</title>
+<meta name="description" content="Free skills for Claude and ChatGPT from Apply AI. Move from scattered assistants to a few focused builds.">
+<style>
+  @font-face { font-family:"Albra"; font-weight:400; font-display:swap; src:url("assets/fonts/RL-Albra-Book-Regular.woff2") format("woff2"); }
+  @font-face { font-family:"Albra"; font-weight:500; font-display:swap; src:url("assets/fonts/RL-Albra-Book-Medium.woff2") format("woff2"); }
+  @font-face { font-family:"Grotesk"; font-weight:300; font-display:swap; src:url("assets/fonts/RL-Albra-Grotesk-Light.woff2") format("woff2"); }
+  @font-face { font-family:"Grotesk"; font-weight:500; font-display:swap; src:url("assets/fonts/RL-Albra-Grotesk-Medium.woff2") format("woff2"); }
+
+  :root {
+    --cream:#FFFCF4; --paper:#FFFFFF; --sand:#F3EDE3; --sand-2:#EDE6DA;
+    --ink:#22080C; --ink-2:#4A3A36; --mute:#857A70; --line:#E3DACD;
+    --red:#FF1F20; --red-soft:#FFEDEA; --red-ink:#C4121A;
+    --serif:"Albra", Georgia, "Times New Roman", serif;
+    --sans:"Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --w:1120px;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--cream); color:var(--ink); font:300 17px/1.6 var(--sans); -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  img { max-width:100%; display:block; }
+  .wrap { max-width:var(--w); margin:0 auto; padding:0 28px; }
+  .kicker { font:500 12px/1 var(--sans); letter-spacing:.18em; text-transform:uppercase; color:var(--red); }
+  .eyebrow { font:500 12px/1 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--mute); }
+  h1, h2, h3 { font-family:var(--serif); font-weight:400; letter-spacing:-.015em; }
+  h2 { font-size:clamp(30px, 4vw, 42px); line-height:1.1; }
+  .lede { font-size:19px; color:var(--ink-2); max-width:640px; }
+
+  /* top bar */
+  .bar { background:var(--red); }
+  .bar .wrap { display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand { display:flex; align-items:center; gap:14px; text-decoration:none; }
+  .brand img.q { height:40px; width:auto; }
+  .brand span { font:400 26px/1 var(--serif); color:var(--ink); }
+  .brand span b { font-weight:400; color:var(--ink); }
+  .bar .logo { height:30px; width:auto; }
+  .ribbon { border-bottom:2px solid var(--red); }
+  .ribbon .wrap { display:flex; justify-content:space-between; padding-top:14px; padding-bottom:12px; font:500 11px/1 var(--sans); letter-spacing:.08em; text-transform:uppercase; }
+  .ribbon nav a { margin-left:24px; text-decoration:none; }
+  .ribbon nav a:hover { color:var(--red); }
+
+  /* hero */
+  .hero { padding:72px 0 56px; }
+  .hero .grid { display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:end; }
+  .hero h1 { margin-top:18px; font-size:clamp(40px, 5.4vw, 68px); line-height:1.04; }
+  .hero h1 em { font-style:normal; color:var(--red); }
+  .hero .lede { margin-top:22px; }
+  .ctas { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:15px 22px; font:500 13px/1 var(--sans); letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border:1.5px solid var(--ink); transition:transform .15s ease, background .15s ease, color .15s ease; }
+  .btn:hover { transform:translateY(-1px); }
+  .btn.primary { background:var(--red); border-color:var(--red); color:#fff; }
+  .btn.primary:hover { background:var(--red-ink); border-color:var(--red-ink); }
+  .btn.ghost { background:transparent; color:var(--ink); }
+  .btn.ghost:hover { background:var(--ink); color:var(--cream); }
+  .btn svg { width:16px; height:16px; }
+  .facts { border-left:2px solid var(--red); padding-left:24px; }
+  .facts div { padding:14px 0; border-bottom:1px solid var(--line); }
+  .facts div:last-child { border-bottom:none; }
+  .facts b { display:block; font:400 30px/1 var(--serif); }
+  .facts span { font-size:15px; color:var(--ink-2); }
+
+  /* diagram */
+  .diagram { padding:16px 0 80px; }
+  .frame { background:var(--cream); border:1px solid var(--line); padding:20px; }
+  .frame img { width:100%; }
+  .caption { margin-top:14px; font-size:15px; color:var(--mute); }
+
+  section.block { padding:84px 0; border-top:1px solid var(--line); }
+  .head { display:grid; grid-template-columns:1fr 1.2fr; gap:48px; align-items:end; margin-bottom:44px; }
+  .head p { color:var(--ink-2); }
+
+  /* skills */
+  .skills { display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; }
+  .card { background:var(--paper); border:1px solid var(--line); padding:30px 30px 26px; display:flex; flex-direction:column; position:relative; transition:border-color .2s ease, transform .2s ease; }
+  .card:hover { border-color:var(--ink); transform:translateY(-2px); }
+  .card .num { font:400 15px/1 var(--serif); color:var(--red); }
+  .card h3 { margin-top:14px; font-size:28px; line-height:1.1; }
+  .card code { display:inline-block; margin-top:8px; font:500 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--mute); }
+  .card p { margin-top:14px; color:var(--ink-2); font-size:16px; }
+  .card .use { margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-size:14.5px; color:var(--ink-2); }
+  .card .use b { font-weight:500; color:var(--ink); }
+  .card .foot { margin-top:auto; padding-top:22px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .chips { display:flex; gap:6px; }
+  .chip { font:500 11px/1 var(--sans); letter-spacing:.06em; text-transform:uppercase; padding:6px 9px; background:var(--sand); color:var(--ink-2); }
+  .dl { display:inline-flex; align-items:center; gap:8px; font:500 13px/1 var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--red); text-decoration:none; }
+  .dl:hover { text-decoration:underline; text-underline-offset:4px; }
+  .card.featured { background:var(--ink); color:var(--cream); border-color:var(--ink); }
+  .card.featured p, .card.featured .use { color:#E8DDD6; }
+  .card.featured .use { border-color:#4A2F2F; }
+  .card.featured .use b { color:#fff; }
+  .card.featured code { color:#B9A79F; }
+  .card.featured .chip { background:#3A1E22; color:#F1E6E0; }
+  .card.featured .dl { color:#FF8A80; }
+  .card.featured:hover { border-color:var(--red); }
+  .tag { position:absolute; top:26px; right:26px; font:500 10.5px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; color:var(--red); border:1px solid var(--red); padding:5px 8px; }
+  .card.featured .tag { color:#FF8A80; border-color:#FF8A80; }
+
+  /* layers */
+  .layers { display:grid; grid-template-columns:repeat(3, 1fr); gap:0; border:1px solid var(--line); background:var(--paper); }
+  .layer { padding:32px 28px; border-right:1px solid var(--line); }
+  .layer:last-child { border-right:none; }
+  .layer .n { width:34px; height:34px; border-radius:50%; background:var(--red); color:#fff; font:500 14px/34px var(--sans); text-align:center; }
+  .layer h3 { margin-top:18px; font-size:24px; }
+  .layer .file { margin-top:6px; font:500 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--mute); }
+  .layer p { margin-top:12px; font-size:15.5px; color:var(--ink-2); }
+  .layer .freq { margin-top:16px; font:500 11px/1.3 var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--red); }
+  .tmpl { margin-top:20px; display:flex; flex-wrap:wrap; gap:10px 22px; }
+
+  /* install */
+  .tabs { display:flex; gap:0; border-bottom:2px solid var(--ink); }
+  .tab { appearance:none; background:none; border:none; cursor:pointer; padding:14px 22px; font:500 14px/1 var(--sans); letter-spacing:.08em; text-transform:uppercase; color:var(--mute); border-bottom:3px solid transparent; margin-bottom:-2px; }
+  .tab[aria-selected="true"] { color:var(--ink); border-bottom-color:var(--red); }
+  .tab:focus-visible { outline:2px solid var(--red); outline-offset:2px; }
+  .panel { display:none; padding:34px 0 0; }
+  .panel.on { display:grid; grid-template-columns:1.25fr .75fr; gap:44px; }
+  ol.steps { list-style:none; counter-reset:s; }
+  ol.steps li { counter-increment:s; position:relative; padding:0 0 22px 52px; }
+  ol.steps li::before { content:counter(s, decimal-leading-zero); position:absolute; left:0; top:1px; font:400 20px/1 var(--serif); color:var(--red); }
+  ol.steps li b { font-weight:500; }
+  ol.steps li > span { display:block; color:var(--ink-2); font-size:15.5px; }
+  ol.steps li > span .path { display:inline; }
+  .path { display:inline-block; font:500 13px/1.4 var(--sans); background:var(--sand); padding:2px 7px; }
+  .aside { background:var(--sand); padding:26px; align-self:start; }
+  .aside h4 { font:500 12px/1 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--red); }
+  .aside p, .aside li { margin-top:10px; font-size:15px; color:var(--ink-2); }
+  .aside ul { padding-left:18px; }
+  .aside a { color:var(--ink); }
+
+  /* start */
+  .start { display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; counter-reset:t; }
+  .start div { border-top:2px solid var(--ink); padding-top:18px; counter-increment:t; }
+  .start div::before { content:counter(t); font:400 40px/1 var(--serif); color:var(--red); }
+  .start h3 { margin-top:12px; font-size:21px; }
+  .start p { margin-top:8px; font-size:15px; color:var(--ink-2); }
+
+  /* footer */
+  footer { background:var(--red); color:var(--ink); margin-top:20px; }
+  footer .wrap { padding-top:48px; padding-bottom:44px; }
+  footer .top { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; padding-bottom:24px; border-bottom:1px solid var(--ink); }
+  footer .top img { height:32px; }
+  footer .top a { font:500 15px/1 var(--sans); text-decoration:none; }
+  footer .row { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:22px; font-size:14px; }
+  footer .row p { color:#FFFCF4; font-weight:500; }
+  footer .row a { margin-left:18px; font-weight:500; }
+
+  @media (max-width:900px) {
+    .hero .grid, .head, .panel.on { grid-template-columns:1fr; gap:32px; }
+    .skills { grid-template-columns:1fr; }
+    .layers { grid-template-columns:1fr; }
+    .layer { border-right:none; border-bottom:1px solid var(--line); }
+    .layer:last-child { border-bottom:none; }
+    .start { grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:560px) {
+    .wrap { padding:0 16px; }
+    .ribbon nav { display:none; }
+    .hero { padding:48px 0 40px; }
+    .frame { padding:14px; }
+    section.block { padding:60px 0; }
+    .card { padding:24px 22px 22px; }
+    .tag { position:static; display:inline-block; margin-bottom:12px; align-self:flex-start; }
+    .start { grid-template-columns:1fr; }
+    .tab { padding:12px 14px; font-size:12.5px; }
+    .bar .logo { height:24px; }
+  }
+  .cc { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .cc > div { padding:30px; border:1px solid var(--line); background:var(--paper); }
+  .cc .cant { background:var(--sand); }
+  .cc h3 { font-size:26px; }
+  .cc ul { list-style:none; margin-top:16px; }
+  .cc li { position:relative; padding:10px 0 10px 30px; border-top:1px solid var(--line); font-size:16px; color:var(--ink-2); }
+  .cc li:first-child { border-top:none; }
+  .cc .can li::before { content:"\2713"; position:absolute; left:0; top:10px; color:var(--red); font-weight:500; }
+  .cc .cant li::before { content:"\2715"; position:absolute; left:2px; top:10px; color:var(--mute); }
+  @media (max-width:900px) { .cc { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="https://pulse.applyai.uk" aria-label="AI Pulse">
+      <img class="q" src="assets/quill.png" alt="">
+      <span>AI Pulse<b>.</b></span>
+    </a>
+    <a href="https://applyai.uk"><img class="logo" src="assets/applyai-logo.svg" alt="Apply AI"></a>
+  </div>
+</header>
+<div class="ribbon">
+  <div class="wrap">
+    <span>Apply AI skills toolkit &middot; Free to use</span>
+    <nav><a href="#skills">Skills</a><a href="#layers">How it works</a><a href="#limits">Can and can&rsquo;t</a><a href="#install">Install</a></nav>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <div class="kicker">From the AI Pulse, Edition 13</div>
+        <h1>From scattered assistants to <em>focused builds.</em></h1>
+        <p class="lede">Four ready-made skills for Claude and ChatGPT. Instead of a separate assistant for every client, write the process once and give each client a short profile. Every improvement then reaches every client.</p>
+        <div class="ctas">
+          <a class="btn primary" href="downloads/applyai-skills-all.zip" download>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v9M4 7l4 4 4-4M2 14h12"/></svg>
+            Download all skills
+          </a>
+          <a class="btn ghost" href="#install">How to install</a>
+        </div>
+      </div>
+      <div class="facts">
+        <div><b>4 skills</b><span>Monitoring, client profiles, new business signals and calibration</span></div>
+        <div><b>3 layers</b><span>Process, client and output, kept separate so it scales</span></div>
+        <div><b>2 platforms</b><span>The same files work in Claude and ChatGPT, with Copilot notes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diagram">
+    <div class="wrap">
+      <div class="frame"><picture><source media="(max-width:560px)" srcset="assets/one-process-every-client-mobile.png"><img src="assets/one-process-every-client.png" alt="Four separate client assistants, each with its own profile and its own copy of the five steps, compared with one monitoring assistant that runs one process for every client using a short client profile for each."></div>
+      <p class="caption">Separate assistants drift apart and every change is made four times. One focused assistant with client profiles means every change is made once.</p>
+    </div>
+  </section>
+
+  <section class="block" id="skills">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">The skills</div><h2>Download what you need</h2></div>
+        <p>Each skill is a small folder of plain instructions. Download it as a ZIP and upload it to Claude or ChatGPT. They work on their own, and they work best together.</p>
+      </div>
+
+      <div class="skills">
+        <article class="card featured">
+          <span class="tag">Start here</span>
+          <div class="num">01</div>
+          <h3>Client monitoring</h3>
+          <code>client-monitoring</code>
+          <p>Produces a daily or weekly press and social monitoring report for any client, using one shared process and that client's profile. Gather, filter, verify, summarise, report, with no repeats from the last run.</p>
+          <div class="use"><b>Use it when</b> you want a consistent news round-up for every client, without a separate assistant for each one.</div>
+          <div class="foot">
+            <div class="chips"><span class="chip">Claude</span><span class="chip">ChatGPT</span></div>
+            <a class="dl" href="downloads/client-monitoring.zip" download>Download ZIP &darr;</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num">02</div>
+          <h3>Client profile builder</h3>
+          <code>client-profile-builder</code>
+          <p>Researches a new client and drafts its profile with you: brand, spokespeople, competitors, priority topics and trusted sources.</p>
+          <div class="use"><b>Use it when</b> you're onboarding a client. A new client needs a profile, not a new assistant.</div>
+          <div class="foot">
+            <div class="chips"><span class="chip">Claude</span><span class="chip">ChatGPT</span></div>
+            <a class="dl" href="downloads/client-profile-builder.zip" download>Download ZIP &darr;</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num">03</div>
+          <h3>New business signals</h3>
+          <code>new-business-signals</code>
+          <p>Checks your target brands for a new CMO, a rebrand, an agency review, new funding or a campaign under pressure, and suggests a first line for each.</p>
+          <div class="use"><b>Use it when</b> you want a short, sourced list of the right moments to get in touch.</div>
+          <div class="foot">
+            <div class="chips"><span class="chip">Claude</span><span class="chip">ChatGPT</span></div>
+            <a class="dl" href="downloads/new-business-signals.zip" download>Download ZIP &darr;</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num">04</div>
+          <h3>Monitoring calibrator</h3>
+          <code>monitoring-calibrator</code>
+          <p>Takes a report and your analyst's feedback, finds which stage went wrong, and writes the exact edit to the shared process, with a changelog entry.</p>
+          <div class="use"><b>Use it when</b> a report misses the mark. Fix the process once, and every client benefits.</div>
+          <div class="foot">
+            <div class="chips"><span class="chip">Claude</span><span class="chip">ChatGPT</span></div>
+            <a class="dl" href="downloads/monitoring-calibrator.zip" download>Download ZIP &darr;</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="layers">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">How it works</div><h2>Three layers, kept separate</h2></div>
+        <p>Keeping these apart is what lets one assistant serve many clients consistently. The process and format are written once. Only the profile changes from client to client.</p>
+      </div>
+      <div class="layers">
+        <div class="layer">
+          <div class="n">1</div>
+          <h3>The process layer</h3>
+          <div class="file">process.md</div>
+          <p>The five stages of the job and the standard for each, with a worked example of a strong finding and a weak one. Examples calibrate judgement better than long instructions.</p>
+          <div class="freq">Written once &middot; changed carefully</div>
+        </div>
+        <div class="layer">
+          <div class="n">2</div>
+          <h3>The client layer</h3>
+          <div class="file">client-profiles/*.md</div>
+          <p>A short profile for each client with the brand, competitors, priority topics, social channels and approved sources. Nothing about method, only what to watch.</p>
+          <div class="freq">One per client &middot; updated as focus changes</div>
+        </div>
+        <div class="layer">
+          <div class="n">3</div>
+          <h3>The output layer</h3>
+          <div class="file">report-format.md</div>
+          <p>The same fields in the same order on every report, so teams can scan quickly, compare week on week and spot what has changed.</p>
+          <div class="freq">Written once &middot; rarely changed</div>
+        </div>
+      </div>
+      <div class="tmpl">
+        <a class="dl" href="templates/client-profile-template.md" download>Client profile template &darr;</a>
+        <a class="dl" href="templates/example-client-northfield-coffee.md" download>Example profile &darr;</a>
+        <a class="dl" href="templates/report-format.md" download>Report format &darr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="limits">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Before you rely on them</div><h2>What these skills can and can&rsquo;t do</h2></div>
+        <p>They support an analyst&rsquo;s judgement and do not replace it. Review every report before it reaches a client.</p>
+      </div>
+      <div class="cc">
+        <div class="can">
+          <h3>They can</h3>
+          <ul>
+            <li>Follow the same process for every client, so reports are consistent</li>
+            <li>Search the public web for press coverage and public social posts on a client, its competitors and its topics</li>
+            <li>Filter, check and summarise, with a source link for every item</li>
+            <li>Skip items from the previous report, when it&rsquo;s in the same project</li>
+            <li>Run on a schedule, and stop safely with a clear message if something&rsquo;s missing</li>
+            <li>Draft client profiles and outreach lines for a person to review</li>
+            <li>Propose exact edits to the process when a report misses the mark</li>
+          </ul>
+        </div>
+        <div class="cant">
+          <h3>They can&rsquo;t</h3>
+          <ul>
+            <li>See behind paywalls or logins, including LinkedIn. These are flagged for the team.</li>
+            <li>Guarantee they find everything. Coverage depends on your platform&rsquo;s web search.</li>
+            <li>See every social post. Private accounts, stories and most comments are out of reach.</li>
+            <li>Monitor broadcast or print unless it&rsquo;s published on the open web</li>
+            <li>Track numbers or alert on spikes. Use a monitoring tool for thresholds.</li>
+            <li>Remember earlier runs on their own</li>
+            <li>Send emails, post messages or contact anyone</li>
+            <li>Change your files or make decisions for you</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="install">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Install</div><h2>Up and running in minutes</h2></div>
+        <p>The same ZIP files work in Claude and ChatGPT. Upload each skill you want separately, then run the short tests in the repository&rsquo;s <a href="tests/">tests</a> folder. Menu names can change, so check your platform's help centre if something has moved.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Choose your platform">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-claude" id="t-claude">Claude</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-chatgpt" id="t-chatgpt">ChatGPT</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-copilot" id="t-copilot">Copilot</button>
+      </div>
+
+      <div class="panel on" role="tabpanel" id="p-claude" aria-labelledby="t-claude">
+        <ol class="steps">
+          <li><b>Turn on code execution</b><span>In <span class="path">Settings &rsaquo; Capabilities</span>, switch on file creation and code execution. On Enterprise plans, an owner enables Skills in organisation settings.</span></li>
+          <li><b>Download a skill</b><span>Download the ZIP for the skill you want from above. Keep it zipped.</span></li>
+          <li><b>Upload it</b><span>Go to <span class="path">Customize &rsaquo; Skills</span>, select <span class="path">+</span>, then <span class="path">Create skill &rsaquo; Upload a skill</span>, and choose the ZIP.</span></li>
+          <li><b>Switch it on</b><span>The skill appears in your list. Make sure its toggle is on.</span></li>
+          <li><b>Add your client profiles</b><span>Create a Project called &ldquo;Client monitoring&rdquo; and add your client profiles to its knowledge.</span></li>
+          <li><b>Ask for a report</b><span>For example, &ldquo;Run today&rsquo;s monitoring report for Northfield Coffee.&rdquo; Claude loads the skill automatically.</span></li>
+        </ol>
+        <div class="aside">
+          <h4>Sharing with your team</h4>
+          <p>On Team and Enterprise plans, open the skill in <span class="path">Customize &rsaquo; Skills</span>, use the menu next to it and choose <b>Share</b>, or <b>Publish to org</b> to make it available to everyone.</p>
+          <p><a href="https://support.claude.com/en/articles/12512180-use-skills-in-claude">Claude help: using skills</a></p>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-chatgpt" aria-labelledby="t-chatgpt" hidden>
+        <ol class="steps">
+          <li><b>Check Skills is available</b><span>Skills are on paid ChatGPT plans. On Business, Enterprise and Edu, your workspace owner may need to switch Skills on.</span></li>
+          <li><b>Download a skill</b><span>Download the ZIP for the skill you want from above.</span></li>
+          <li><b>Upload it</b><span>Select your profile icon, open <span class="path">Skills</span>, choose <span class="path">Upload from your computer</span> and select the ZIP.</span></li>
+          <li><b>Check it&rsquo;s installed</b><span>The skill appears under <span class="path">Installed</span>, where you can manage it.</span></li>
+          <li><b>Add your client profiles</b><span>Create a Project called &ldquo;Client monitoring&rdquo; and upload your client profiles to it.</span></li>
+          <li><b>Ask for a report</b><span>For example, &ldquo;Run today&rsquo;s monitoring report for Northfield Coffee.&rdquo; Then set a scheduled task to run it each morning.</span></li>
+        </ol>
+        <div class="aside">
+          <h4>No Skills option?</h4>
+          <p>Open the skill&rsquo;s <b>SKILL.md</b> file, copy its contents into your Project instructions, and upload the files from its <b>references</b> and <b>assets</b> folders to the Project. The result is the same.</p>
+          <p><a href="https://academy.openai.com/public/resources/skills">OpenAI Academy: skills</a></p>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-copilot" aria-labelledby="t-copilot" hidden>
+        <ol class="steps">
+          <li><b>Store the files in SharePoint</b><span>Unzip the skill and put its files, plus your client profiles, in a SharePoint or OneDrive folder called &ldquo;Client monitoring&rdquo;.</span></li>
+          <li><b>Create an agent</b><span>In Microsoft 365 Copilot, create an agent and paste the contents of <b>SKILL.md</b> into its instructions.</span></li>
+          <li><b>Add the folder as knowledge</b><span>Point the agent at your &ldquo;Client monitoring&rdquo; folder, and make sure web search is allowed.</span></li>
+          <li><b>Ask for a report</b><span>For example, &ldquo;Run today&rsquo;s monitoring report for Northfield Coffee.&rdquo;</span></li>
+          <li><b>Automate delivery</b><span>For a report in Teams or by email every morning, build the agent in Copilot Studio and add a scheduled Power Automate flow.</span></li>
+        </ol>
+        <div class="aside">
+          <h4>Good to know</h4>
+          <p>Copilot doesn&rsquo;t install skill files directly, but the instructions inside them work as agent instructions. Your administrator may need to enable agent creation or web search.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Your first week</div><h2>Start small, then calibrate</h2></div>
+        <p>Treat the first few weeks as calibration. Review each report against what your best analyst would have flagged, and improve the process once.</p>
+      </div>
+      <div class="start">
+        <div><h3>Install</h3><p>Upload client monitoring and client profile builder.</p></div>
+        <div><h3>Profile one client</h3><p>Build a single profile with the profile builder and check it with the account lead.</p></div>
+        <div><h3>Run and compare</h3><p>Run a report and compare it with what your team would have flagged.</p></div>
+        <div><h3>Calibrate</h3><p>Use the calibrator to fix the process, then add your next client.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <a href="https://applyai.uk"><img src="assets/applyai-logo.svg" alt="Apply AI"></a>
+      <a href="mailto:connect@applyai.uk">connect@applyai.uk</a>
+    </div>
+    <div class="row">
+      <p>Built by Apply AI, the AI consultancy helping teams put AI to work.</p>
+      <div><a href="https://pulse.applyai.uk">Sign up to AI Pulse</a><a href="https://applyai.uk">applyai.uk</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('.tab');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (o) {
+          var p = document.getElementById(o.getAttribute('aria-controls'));
+          var on = o === t;
+          o.setAttribute('aria-selected', on ? 'true' : 'false');
+          p.hidden = !on;
+          p.classList.toggle('on', on);
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
